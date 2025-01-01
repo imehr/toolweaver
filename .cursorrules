@@ -1,0 +1,321 @@
+# ==================================
+# CURSOR IDE RULE CONFIGURATIONS
+# ==================================
+
+# Global Project Settings
+project_name: "ToolWeaver"
+version: "1.0.0"
+description: """
+Project supporting automatic tool creation and management
+with integrated modular tool system.
+"""
+
+# ==================================
+# ENVIRONMENT CONFIGURATION
+# ==================================
+
+@environment_config {
+    python: {
+        venv_required: true
+        venv_location: ".venv"
+        requirements_file: "requirements.txt"
+        activation_scripts: {
+            windows: ".venv\\Scripts\\activate"
+            unix: "source .venv/bin/activate"
+        }
+        package_management: {
+            auto_create_reqs: true
+            version_format: "package==version"
+            allow_ranges: true
+            auto_install: true
+        }
+    }
+    
+    node: {
+        package_file: "package.json"
+        lock_file: "package-lock.json"
+        node_modules: "node_modules/"
+        package_management: {
+            auto_create_pkg: true
+            version_format: "^version"
+            install_command: "npm install"
+            auto_install: true
+        }
+    }
+}
+
+# ==================================
+# FRAMEWORK DEFINITIONS
+# ==================================
+
+@framework "tool_builder" {
+    description: """
+    Core framework for autonomous tool creation and management.
+    Tools are managed in tools/modules directory and documented in README_AGENT_TOOLS.md.
+    Each tool is a self-contained module with its own configuration and documentation.
+    """
+    
+    # Environment Setup
+    environment_setup: {
+        check_steps: [
+            "verify_python_version",
+            "check_venv_exists",
+            "create_venv_if_needed",
+            "verify_node_version",
+            "check_node_modules"
+        ]
+        file_creation: [
+            "requirements.txt",
+            "package.json",
+            "README.md"
+        ]
+        environment_sync: true
+    }
+    
+    # Tool Creation Triggers
+    triggers: {
+        - external_data_access_needed
+        - complex_processing_required
+        - repetitive_task_automation
+        - visual_component_generation
+        - user_input_validation
+        - multi_step_orchestration
+    }
+
+    # Tool Building Process
+    process: [
+        1: "check_environment_setup"
+        2: "create_virtual_env_if_needed"
+        3: "verify_dependencies"
+        4: "assess_existing_tools"
+        5: "check_required_packages"
+        6: "create_tool_directory"
+        7: "implement_tool"
+        8: "create_tool_config"
+        9: "write_tests"
+        10: "create_documentation"
+        11: "validate_implementation"
+    ]
+
+    # Tool Structure Requirements
+    structure: {
+        base_directory: "tools/modules"
+        format: "modular_directory"
+        requirements: [
+            "config_json",
+            "readme_md",
+            "tests",
+            "implementation",
+            "documentation"
+        ]
+        package_management: {
+            check_requirements: true
+            auto_update_deps: true
+        }
+        documentation_checks: {
+            verify_readme: true
+            check_tool_documentation: true
+            validate_examples: true
+            ensure_features_extracted: true
+            pre_commit_hooks: {
+                enabled: true
+                hooks: [
+                    {
+                        name: "verify_docs_sync"
+                        run: "pre-commit"
+                        fail_on_error: true
+                        actions: [
+                            "check_tool_documentation",
+                            "verify_config_json",
+                            "validate_doc_format",
+                            "check_test_coverage"
+                        ]
+                    }
+                ]
+            }
+            auto_sync: {
+                enabled: true
+                triggers: ["tool_update", "doc_validation_fail"]
+                max_retries: 3
+                notify_on_failure: true
+            }
+        }
+    }
+
+    # Documentation Requirements
+    documentation: {
+        format: "markdown"
+        sections: [
+            "overview",
+            "requirements",
+            "installation",
+            "parameters",
+            "return_values",
+            "examples",
+            "dependencies",
+            "validation"
+        ]
+        examples_required: true
+        validation_steps: [
+            "check_file_exists",
+            "verify_format",
+            "validate_sections",
+            "check_tool_coverage",
+            "verify_examples",
+            "ensure_features_listed"
+        ]
+
+        # Agent Tools Documentation
+        agent_tools_doc: {
+            file: "README_AGENT_TOOLS.md"
+            auto_update: true
+            auto_generate: true
+            update_trigger: ["tool_creation_complete", "tool_modification", "startup"]
+            update_behavior: {
+                mode: "append_and_update"
+                preserve_manual_edits: true
+                backup_before_update: true
+                validate_after_update: true
+                fail_on_validation_error: true
+                retry_on_failure: true
+                max_retries: 3
+                backup_location: ".backups/readme_agent_tools/"
+            }
+            error_handling: {
+                on_validation_error: "fail_and_notify"
+                on_update_error: "retry_and_report"
+                on_sync_error: "backup_and_retry"
+                error_notification: {
+                    log_errors: true
+                    show_warnings: true
+                    detailed_reports: true
+                }
+            }
+            sync_behavior: {
+                check_on_startup: true
+                periodic_sync: true
+                sync_interval: "1h"
+                force_sync_on_mismatch: true
+                verify_after_sync: true
+            }
+            validation_steps: [
+                "verify_file_exists",
+                "check_all_tools_present",
+                "validate_tool_sections",
+                "verify_features_extracted",
+                "check_examples_validity",
+                "ensure_metrics_updated",
+                "check_documentation_format",
+                "validate_links_and_anchors",
+                "ensure_no_duplicate_tools",
+                "verify_version_consistency",
+                "check_example_syntax",
+                "validate_dependency_versions",
+                "ensure_complete_metadata"
+            ]
+            sections: [
+                "tool_name",
+                "version",
+                "description",
+                "features",
+                "inputs",
+                "outputs",
+                "examples",
+                "dependencies",
+                "validation_rules",
+                "usage_metrics",
+                "last_updated",
+                "changelog"
+            ]
+            features_extraction: {
+                from_description: true
+                from_validation: true
+                from_dependencies: true
+                from_examples: true
+                from_usage_patterns: true
+                custom_features: []
+                extraction_rules: {
+                    parse_capabilities: true
+                    identify_integrations: true
+                    detect_requirements: true
+                    analyze_complexity: true
+                }
+                feature_categorization: [
+                    "core_functionality",
+                    "data_handling",
+                    "integration_points",
+                    "error_handling",
+                    "performance_features",
+                    "security_aspects"
+                ]
+            }
+            documentation_maintenance: {
+                auto_format: true
+                check_links: true
+                update_timestamps: true
+                track_changes: true
+                maintain_versions: true
+                cleanup_old_entries: true
+                archive_outdated: true
+            }
+        }
+    }
+
+    # Validation Requirements
+    validation: {
+        steps: [
+            "environment_check",
+            "dependency_check",
+            "input_validation",
+            "output_validation",
+            "performance_check",
+            "test_coverage",
+            "documentation_check"
+        ]
+        user_confirmation: required
+        automated_tests: enabled
+    }
+}
+
+# ==================================
+# USAGE INSTRUCTIONS
+# ==================================
+
+# Environment Setup and Tool Creation
+"""
+1. Before creating any tools:
+   - Check/create Python virtual environment
+   - Verify requirements.txt exists
+   - Check/create package.json for Node.js
+   - Install required dependencies
+
+2. When creating a new tool:
+   - Create tool directory in tools/modules/
+   - Add required files based on language
+   - Implement tool functionality
+   - Add configuration and tests
+   - Create tool documentation
+   - Framework updates README_AGENT_TOOLS.md
+
+3. Using existing tools:
+   - Import from tools package
+   - Check tool documentation
+   - Verify environment setup
+   - Follow usage examples
+"""
+
+# Environment and Documentation Maintenance
+"""
+Virtual Environment Management:
+- Python virtual environment is created/maintained
+- Dependencies are tracked in requirements.txt
+- Node packages are managed in package.json
+- Environment is synchronized with requirements
+
+Documentation Maintenance:
+- Each tool has its own README.md
+- Framework maintains README_AGENT_TOOLS.md
+- Usage statistics are tracked
+- Examples are verified and updated
+- Dependencies are tracked and versioned
+"""
