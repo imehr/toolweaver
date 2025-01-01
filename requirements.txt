@@ -1,0 +1,25 @@
+# Core Framework Dependencies
+pydantic>=2.0.0
+typing-extensions>=4.5.0
+PyYAML>=6.0.1
+
+# Testing and Validation
+pytest>=7.4.0
+pytest-cov>=4.1.0
+mypy>=1.5.0
+
+# Documentation
+mkdocs>=1.5.0
+mkdocs-material>=9.2.0
+
+# Development Tools
+black>=23.7.0
+isort>=5.12.0
+flake8>=6.1.0
+
+# Common Tool Dependencies
+requests>=2.31.0  # For API tools
+pandas>=2.0.0    # For data processing
+numpy>=1.24.0    # For numerical operations
+pillow>=10.0.0   # For image processing
+jinja2>=3.1.0    # For templating 
