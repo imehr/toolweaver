@@ -1,180 +1,52 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Tool Configuration Schema",
-    "description": "Schema for tool configuration files in the framework",
+    "description": "Schema for ToolWeaver tool configuration",
     "type": "object",
-    "required": [
-        "name",
-        "version",
-        "language",
-        "description",
-        "author",
-        "inputs",
-        "outputs"
-    ],
+    "required": ["name", "version", "description"],
     "properties": {
         "name": {
             "type": "string",
-            "description": "The name of the tool",
-            "pattern": "^[a-z][a-z0-9_]*$"
+            "description": "The name of the tool"
         },
         "version": {
             "type": "string",
             "description": "The version of the tool",
             "pattern": "^\\d+\\.\\d+\\.\\d+$"
         },
-        "language": {
-            "type": "string",
-            "description": "The primary implementation language",
-            "enum": ["python", "typescript", "mixed"]
-        },
         "description": {
             "type": "string",
-            "description": "A detailed description of the tool"
+            "description": "A description of what the tool does"
         },
-        "author": {
+        "language": {
             "type": "string",
-            "description": "The author of the tool"
+            "enum": ["python", "typescript", "mixed"],
+            "description": "The primary programming language used"
         },
         "dependencies": {
             "type": "object",
-            "description": "Tool dependencies by language",
+            "description": "Tool dependencies",
             "properties": {
                 "python": {
                     "type": "object",
-                    "properties": {
-                        "packages": {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "pattern": "^[a-zA-Z0-9-_.]+==\\d+\\.\\d+\\.\\d+$"
-                            }
-                        }
+                    "description": "Python package dependencies",
+                    "additionalProperties": {
+                        "type": "string"
                     }
                 },
                 "node": {
                     "type": "object",
-                    "properties": {
-                        "packages": {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "pattern": "^[@a-zA-Z0-9-_/]+@\\^?\\d+\\.\\d+\\.\\d+$"
-                            }
-                        }
+                    "description": "Node.js package dependencies",
+                    "additionalProperties": {
+                        "type": "string"
                     }
                 }
             }
         },
-        "inputs": {
-            "type": "array",
-            "description": "List of tool inputs",
-            "items": {
-                "type": "object",
-                "required": ["name", "type", "description"],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "pattern": "^[a-z][a-z0-9_]*$"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "required": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "default": {
-                        "description": "Default value for optional inputs"
-                    },
-                    "validation": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "outputs": {
-            "type": "array",
-            "description": "List of tool outputs",
-            "items": {
-                "type": "object",
-                "required": ["name", "type", "description"],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "pattern": "^[a-z][a-z0-9_]*$"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "validation": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "metrics": {
+        "configuration": {
             "type": "object",
-            "description": "Tool usage metrics",
-            "properties": {
-                "average_execution_time": {
-                    "type": "string",
-                    "pattern": "^\\d+(\\.\\d+)?s$"
-                },
-                "error_rate": {
-                    "type": "string",
-                    "pattern": "^\\d+(\\.\\d+)?%$"
-                },
-                "usage_count": {
-                    "type": "integer",
-                    "minimum": 0
-                }
-            }
-        },
-        "documentation": {
-            "type": "object",
-            "description": "Additional documentation settings",
-            "properties": {
-                "examples": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "notes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "links": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "url": {
-                                "type": "string",
-                                "format": "uri"
-                            }
-                        }
-                    }
-                }
-            }
+            "description": "Tool-specific configuration",
+            "additionalProperties": true
         }
     }
 } 
