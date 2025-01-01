@@ -1,6 +1,8 @@
 # ToolWeaver
 
-An intelligent framework for weaving AI-powered tools within Cursor IDE. This framework enables automatic tool creation, documentation, and management with a focus on modularity and maintainability.
+An intelligent framework for weaving AI-powered tools within Cursor IDE, designed to seamlessly integrate with Cursor's Agent mode. This framework enables automatic tool creation, documentation, and management with a focus on modularity and maintainability. When running in Agent mode, Cursor can dynamically leverage ToolWeaver to create and utilize custom tools needed to complete complex tasks - from data processing to API integrations to code generation.
+
+The framework empowers Cursor Agent to analyze tasks, identify required tooling capabilities, and automatically create, test and document the necessary tools. This creates a self-expanding ecosystem where new tools are generated on-demand based on the Agent's needs while maintaining high standards for documentation, testing and maintainability.
 
 **Author:** Mehran Mozaffari
 
