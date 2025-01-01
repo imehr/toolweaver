@@ -45,6 +45,75 @@ with integrated modular tool system.
 }
 
 # ==================================
+# MEMORY MANAGEMENT CONFIGURATION
+# ==================================
+
+@memory_config {
+    optimization: {
+        compression: {
+            enabled: true
+            algorithms: ["lz4", "zstd", "gzip"]
+            auto_compress: true
+            compression_threshold: "100MB"
+            decompression_cache: "1GB"
+        }
+        caching: {
+            enabled: true
+            cache_size: "2GB"
+            eviction_policy: "LRU"
+            persistence: true
+        }
+    }
+    
+    backup: {
+        enabled: true
+        schedule: "daily"
+        retention: {
+            daily: 7
+            weekly: 4
+            monthly: 3
+        }
+        storage: {
+            location: ".backups/memory/"
+            format: "compressed"
+            encryption: true
+        }
+    }
+    
+    analytics: {
+        enabled: true
+        metrics: [
+            "memory_usage",
+            "compression_ratio",
+            "cache_hits",
+            "operation_latency",
+            "backup_status"
+        ]
+        reporting: {
+            interval: "1h"
+            format: "json"
+            storage: ".analytics/memory/"
+        }
+        alerts: {
+            memory_threshold: "90%"
+            backup_failures: true
+            performance_degradation: true
+        }
+    }
+    
+    validation: {
+        integrity_checks: true
+        consistency_validation: true
+        error_correction: true
+        recovery_procedures: {
+            auto_recovery: true
+            fallback_options: ["cache", "backup", "rebuild"]
+            max_retries: 3
+        }
+    }
+}
+
+# ==================================
 # FRAMEWORK DEFINITIONS
 # ==================================
 
@@ -274,6 +343,456 @@ with integrated modular tool system.
         ]
         user_confirmation: required
         automated_tests: enabled
+    }
+
+    # Tool Recipe System
+    recipe_system: {
+        enabled: true
+        structure: {
+            name: "Tool Recipes"
+            description: """
+            User-defined workflow steps that specify how a tool should process information.
+            Each recipe defines a sequence of operations and their interaction with memory.
+            """
+            components: [
+                "recipe_definition",
+                "memory_integration",
+                "workflow_steps",
+                "validation_rules"
+            ]
+        }
+
+        recipe_definition: {
+            format: "yaml"
+            required_fields: [
+                "name",
+                "description",
+                "steps",
+                "memory_interactions",
+                "validation_rules"
+            ]
+            validation: {
+                syntax_check: true
+                memory_compatibility: true
+                step_dependency_check: true
+            }
+        }
+
+        memory_integration: {
+            short_term: {
+                store: ["current_step_results", "intermediate_data"]
+                retrieve: ["step_context", "previous_results"]
+            }
+            working_memory: {
+                store: ["workflow_state", "active_patterns"]
+                retrieve: ["processing_context", "active_insights"]
+            }
+            long_term: {
+                store: ["completed_analyses", "validated_patterns"]
+                retrieve: ["historical_insights", "proven_workflows"]
+            }
+        }
+
+        workflow_steps: {
+            definition: {
+                format: "sequential_dag"
+                supports: ["branching", "loops", "conditions"]
+                step_types: [
+                    "data_processing",
+                    "analysis",
+                    "synthesis",
+                    "validation",
+                    "user_interaction"
+                ]
+            }
+            step_template: {
+                required: [
+                    "name",
+                    "type",
+                    "inputs",
+                    "outputs",
+                    "memory_operations",
+                    "validation_rules"
+                ]
+                optional: [
+                    "conditions",
+                    "iterations",
+                    "user_checkpoints"
+                ]
+            }
+        }
+
+        validation_rules: {
+            types: [
+                "syntax_validation",
+                "memory_compatibility",
+                "workflow_consistency",
+                "output_validation"
+            ]
+            enforcement: {
+                pre_execution: true
+                runtime: true
+                post_execution: true
+            }
+        }
+
+        example_recipe: {
+            name: "ux_research_analyzer"
+            steps: [
+                {
+                    name: "transcript_analysis"
+                    type: "data_processing"
+                    memory_operations: {
+                        read: ["raw_transcripts"]
+                        write: ["cleaned_transcripts"]
+                        context: ["analysis_patterns"]
+                    }
+                },
+                {
+                    name: "insight_extraction"
+                    type: "analysis"
+                    memory_operations: {
+                        read: ["cleaned_transcripts"]
+                        write: ["key_insights"]
+                        context: ["insight_patterns"]
+                    }
+                }
+            ]
+        }
+    }
+}
+
+# ==================================
+# PROJECT MANAGEMENT CONFIGURATION
+# ==================================
+
+@project_config {
+    user_interaction: {
+        skill_levels: ["engineer", "designer", "researcher", "product_manager"]
+        documentation_style: {
+            engineer: "technical"
+            designer: "visual_workflow"
+            researcher: "methodology_focused"
+            product_manager: "business_oriented"
+        }
+        project_creation: {
+            auto_readme: true
+            readme_template: "templates/readme/${user_type}.md"
+            quick_start_guide: true
+            tool_usage_examples: true
+            visual_guides: true
+        }
+        tool_requests: {
+            auto_project_creation: true
+            project_naming: {
+                auto_generate: true
+                allow_rename: true
+                format: "${tool_type}_${timestamp}"
+            }
+            documentation: {
+                include_setup_guide: true
+                include_examples: true
+                include_memory_guide: true
+                include_workflow: true
+            }
+        }
+    }
+
+    workspace_management: {
+        auto_create: true
+        default_structure: {
+            data: "data/"
+            exports: "exports/"
+            memory: "memory/"
+            config: "config/"
+            tools: "tools/"
+            docs: "docs/"
+            guides: "guides/"
+        }
+        project_file: "project.yaml"
+        readme_generation: {
+            enabled: true
+            sections: [
+                "project_overview",
+                "getting_started",
+                "tool_usage",
+                "memory_guide",
+                "workflow_steps",
+                "examples",
+                "troubleshooting"
+            ]
+            visual_aids: {
+                enabled: true
+                types: ["workflow_diagrams", "directory_structure", "memory_maps"]
+            }
+        }
+        git_integration: {
+            enabled: true
+            auto_init: true
+            commit_on_changes: true
+        }
+    }
+
+    tool_management: {
+        registry: {
+            location: ".tools_registry/"
+            index_file: "registry.yaml"
+            versioning: true
+            auto_update: true
+        }
+        discovery: {
+            scan_directories: ["tools/modules/"]
+            auto_register: true
+            dependency_tracking: true
+        }
+        creation: {
+            templates_dir: "tools/templates/"
+            auto_documentation: true
+            test_generation: true
+        }
+    }
+
+    recipe_management: {
+        registry: {
+            location: ".recipes_registry/"
+            index_file: "recipes.yaml"
+            versioning: true
+        }
+        discovery: {
+            scan_directories: ["tools/modules/*/recipes/"]
+            auto_register: true
+        }
+        validation: {
+            check_memory_ops: true
+            verify_tool_compatibility: true
+            test_workflows: true
+        }
+    }
+
+    memory_management: {
+        namespacing: {
+            enabled: true
+            structure: "hierarchical"
+            format: "${project_name}/${context_type}/${memory_type}"
+            global_namespace: "global"
+        }
+        project_isolation: {
+            enabled: true
+            cross_project_sharing: {
+                enabled: true
+                patterns_only: true
+                require_explicit: true
+            }
+        }
+        data_types: {
+            structured: {
+                formats: ["json", "yaml", "toml"]
+                schema_validation: true
+            }
+            unstructured: {
+                enabled: true
+                types: ["text", "audio", "image", "video"]
+                metadata_tracking: true
+            }
+            mixed: {
+                enabled: true
+                index_strategy: "hybrid"
+                metadata_schema: "flexible"
+            }
+        }
+        operations: {
+            auto_backup: true
+            versioning: true
+            garbage_collection: {
+                enabled: true
+                policy: "retention_based"
+                retention_rules: {
+                    short_term: "30d"
+                    working: "90d"
+                    long_term: "unlimited"
+                }
+            }
+        }
+    }
+
+    export_management: {
+        formats: {
+            pdf: {
+                enabled: true
+                templates_dir: "templates/pdf/"
+                default_template: "standard"
+            }
+            json: {
+                enabled: true
+                pretty_print: true
+                schema_validation: true
+            }
+            html: {
+                enabled: true
+                templates_dir: "templates/html/"
+                interactive: true
+            }
+        }
+        automation: {
+            auto_export: false
+            triggers: ["on_completion", "on_request"]
+            notification: true
+        }
+        archival: {
+            enabled: true
+            compression: true
+            retention: "180d"
+        }
+    }
+
+    batch_processing: {
+        enabled: true
+        parallel: {
+            enabled: true
+            max_workers: 5
+            strategy: "process_pool"
+        }
+        monitoring: {
+            progress_tracking: true
+            status_updates: true
+            error_handling: {
+                retry_count: 3
+                backoff_strategy: "exponential"
+            }
+        }
+        directory_watching: {
+            enabled: true
+            patterns: ["*.transcript", "*.recording", "*.notes"]
+            ignore_patterns: ["*.tmp", "*.bak"]
+            recursive: true
+        }
+    }
+
+    agent_instructions: {
+        natural_language_commands: {
+            project_management: [
+                "Open project ${name}",
+                "Continue working on ${name}",
+                "Rename project to ${new_name}",
+                "Show project status",
+                "Export everything as ${format}"
+            ]
+            analysis_commands: [
+                "Analyze interviews in this project",
+                "Show patterns from all interviews",
+                "Generate insights report",
+                "Export insights as ${format}"
+            ]
+            help_commands: [
+                "Help me with ${task}",
+                "How do I ${action}",
+                "Show available commands",
+                "What can this tool do"
+            ]
+        }
+
+        command_handling: {
+            pattern_matching: {
+                enabled: true
+                fuzzy_matching: true
+                context_aware: true
+            }
+            response_generation: {
+                style: "${user_type}_friendly"
+                include_examples: true
+                show_next_steps: true
+            }
+            error_handling: {
+                friendly_messages: true
+                suggestion_based: true
+                show_alternatives: true
+            }
+        }
+
+        project_context: {
+            auto_detect_type: true
+            user_type_inference: true
+            skill_level_adaptation: true
+            context_persistence: {
+                save_on_switch: true
+                restore_on_return: true
+                include_recent_actions: true
+            }
+        }
+
+        tool_creation_flow: {
+            on_user_request: """
+            When user requests functionality:
+            1. Understand user type and context
+            2. Create appropriate tool
+            3. Set up project automatically
+            4. Generate user-type specific guide
+            5. Provide natural language commands
+            6. Show example workflows
+            """
+            project_setup: """
+            When setting up project:
+            1. Create workspace with user-friendly name
+            2. Configure for user type
+            3. Generate appropriate documentation
+            4. Show getting started guide
+            5. Explain available commands
+            """
+        }
+    }
+
+    documentation_templates: {
+        project_readme: """
+        # ${project_name}
+
+        ## Quick Start
+        ${quick_start_guide}
+
+        ## Available Tools
+        ${tools_overview}
+
+        ## How to Use
+        ${usage_instructions}
+
+        ## Memory System
+        ${memory_guide}
+
+        ## Examples
+        ${practical_examples}
+
+        ## Coming Back to Your Project
+        To continue working on this project later:
+        1. Open Cursor
+        2. Type: "I want to continue working on ${project_name}"
+        3. The agent will restore your project context
+
+        ## Renaming Your Project
+        To rename this project:
+        1. Type: "Rename this project to <new_name>"
+        2. The agent will update all necessary references
+        """
+
+        tool_guide: """
+        # Using ${tool_name}
+
+        ## What This Tool Does
+        ${tool_description}
+
+        ## Getting Started
+        ${quick_start}
+
+        ## Step-by-Step Guide
+        ${usage_steps}
+
+        ## Examples
+        ${examples}
+
+        ## Memory Usage
+        ${memory_guide}
+
+        ## Tips and Tricks
+        ${usage_tips}
+        """
     }
 }
 
