@@ -1,0 +1,203 @@
+tool_id: "insight_synthesizer"
+version: "1.0.0"
+description: "Synthesizes insights from multiple research sources"
+
+memory:
+  storage_rules:
+    working_memory: true
+    long_term: true
+  retention:
+    working_memory: "24h"
+    long_term: "permanent"
+
+validation:
+  input_schema:
+    type: "object"
+    properties:
+      min_confidence:
+        type: "number"
+        minimum: 0.0
+        maximum: 1.0
+        default: 0.8
+    additionalProperties: false
+    
+  output_schema:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        enum: ["insight_synthesis"]
+      timestamp:
+        type: "string"
+        format: "date-time"
+      key_findings:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            text:
+              type: "string"
+            theme:
+              type: "string"
+            frequency:
+              type: "integer"
+            confidence:
+              type: "number"
+            relevance:
+              type: "number"
+            supporting_insights:
+              type: "array"
+              items:
+                type: "string"
+            entities:
+              type: "array"
+      recommendations:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            title:
+              type: "string"
+            description:
+              type: "string"
+            priority:
+              type: "number"
+            impact:
+              type: "number"
+            effort:
+              type: "number"
+            supporting_insights:
+              type: "array"
+              items:
+                type: "string"
+      priority_areas:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            score:
+              type: "number"
+            sentiment:
+              type: "number"
+            urgency:
+              type: "number"
+            insight_count:
+              type: "integer"
+            key_insights:
+              type: "array"
+              items:
+                type: "string"
+      confidence_scores:
+        type: "object"
+        properties:
+          overall:
+            type: "number"
+          findings:
+            type: "number"
+          recommendations:
+            type: "number"
+          priorities:
+            type: "number"
+      metadata:
+        type: "object"
+        properties:
+          source_count:
+            type: "integer"
+          insight_count:
+            type: "integer"
+    required: [
+      "type",
+      "timestamp",
+      "key_findings",
+      "recommendations",
+      "priority_areas",
+      "confidence_scores",
+      "metadata"
+    ]
+
+  confidence_threshold: 0.7
+
+  content_rules:
+    min_word_count: 10
+    max_word_count: 500
+    required_patterns:
+      - type: "action_item"
+        regex: "\\b(should|must|need to|recommend)\\b"
+      - type: "quantifier"
+        regex: "\\b(\\d+|several|many|most|all)\\b"
+      - type: "qualifier"
+        regex: "\\b(significant|important|critical|key)\\b"
+    
+  relationship_rules:
+    min_supporting_insights: 2
+    max_supporting_insights: 10
+    min_theme_frequency: 2
+    max_theme_frequency: 20
+    
+  quality_metrics:
+    min_confidence: 0.7
+    min_relevance: 0.6
+    min_support: 0.3
+    max_redundancy: 0.2
+
+  data_quality:
+    completeness:
+      required_fields:
+        - text
+        - score
+        - timestamp
+        - source
+      recommended_fields:
+        - entities
+        - keywords
+        - themes
+    
+    consistency:
+      sentiment_rules:
+        - field: "sentiment.polarity"
+          must_match: "sentiment.assessment"
+          tolerance: 0.1
+      entity_rules:
+        - min_confidence: 0.6
+        - require_type: true
+      theme_rules:
+        - min_frequency: 2
+        - max_themes: 5
+    
+    timeliness:
+      max_age_days: 180
+      age_weights:
+        "7d": 1.0
+        "30d": 0.8
+        "90d": 0.6
+        "180d": 0.4
+    
+    relationship_validation:
+      min_connections: 2
+      max_connections: 10
+      min_support: 0.3
+      require_bidirectional: true
+    
+    content_validation:
+      text_patterns:
+        - type: "insight_marker"
+          pattern: "\\b(found|observed|noticed|discovered)\\b"
+          required: true
+        - type: "evidence_marker"
+          pattern: "\\b(because|since|as|therefore)\\b"
+          recommended: true
+      semantic_rules:
+        - check_coherence: true
+        - check_redundancy: true
+        - min_specificity: 0.6
+
+analysis:
+  similarity_threshold: 0.3
+  min_group_size: 2
+  min_frequency: 2
+  priority_weights:
+    sentiment: 0.3
+    frequency: 0.3
+    urgency: 0.4 

@@ -1,0 +1,76 @@
+{
+  "memory_system": {
+    "base_path": "tools/data/memory",
+    "retention": {
+      "short_term": "1h",
+      "working": "24h",
+      "long_term": "permanent"
+    },
+    "capacity": {
+      "short_term": "100MB",
+      "working": "1GB",
+      "long_term": "unlimited"
+    }
+  },
+  "storage_rules": {
+    "working_memory": {
+      "patterns": ["insights", "workflows", "active_context"],
+      "threshold": 0.7
+    },
+    "long_term": {
+      "patterns": ["validated_findings", "proven_workflows", "tool_configs"],
+      "threshold": 0.9
+    }
+  },
+  "optimization": {
+    "interval": 3600,
+    "rules": {
+      "compact_threshold": 100,
+      "merge_threshold": 0.7,
+      "index_batch_size": 1000
+    },
+    "scheduling": {
+      "enabled": true,
+      "quiet_hours": ["00:00", "06:00"]
+    }
+  },
+  "compression": {
+    "enabled": true,
+    "min_size": 1024,
+    "algorithms": {
+      "default": "zlib",
+      "options": {
+        "level": 6
+      }
+    }
+  },
+  "migration": {
+    "auto_backup": true,
+    "backup_retention": "30d",
+    "versions": {
+      "current": "1.1",
+      "supported": ["1.0", "1.1"]
+    }
+  },
+  "search": {
+    "parallel": {
+      "enabled": true,
+      "max_workers": 3,
+      "batch_size": 100
+    },
+    "scoring": {
+      "min_score": 0.5,
+      "fuzzy_threshold": 0.7,
+      "boost": {
+        "title": 2.0,
+        "keywords": 1.5,
+        "content": 1.0
+      }
+    },
+    "cache": {
+      "enabled": true,
+      "max_size": 1000,
+      "ttl": 300
+    }
+  }
+} 

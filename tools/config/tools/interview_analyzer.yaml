@@ -1,0 +1,61 @@
+tool_id: "interview_analyzer"
+version: "1.0.0"
+description: "Analyzes user interview transcripts to extract insights"
+
+memory:
+  storage_rules:
+    working_memory: true
+    long_term: true
+  retention:
+    working_memory: "24h"
+    long_term: "permanent"
+
+validation:
+  input_schema:
+    type: "object"
+    properties:
+      transcript:
+        type: "string"
+        minLength: 50
+    required: ["transcript"]
+    
+  output_schema:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        enum: ["interview_analysis"]
+      insights:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            text: 
+              type: "string"
+            score:
+              type: "number"
+            entities:
+              type: "array"
+            keywords:
+              type: "array"
+      sentiment:
+        type: "object"
+        properties:
+          polarity:
+            type: "number"
+          subjectivity:
+            type: "number"
+          assessment:
+            type: "string"
+      themes:
+        type: "array"
+        items:
+          type: "string"
+    required: ["type", "insights", "sentiment", "themes"]
+
+  confidence_threshold: 0.7
+
+nlp:
+  model: "en_core_web_sm"
+  batch_size: 1000
+  min_sentence_length: 10 

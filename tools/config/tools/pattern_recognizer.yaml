@@ -1,0 +1,60 @@
+tool_id: "pattern_recognizer"
+version: "1.0.0"
+description: "Recognizes patterns across multiple research artifacts"
+
+memory:
+  storage_rules:
+    working_memory: true
+    long_term: true
+  retention:
+    working_memory: "24h"
+    long_term: "permanent"
+
+validation:
+  input_schema:
+    type: "object"
+    properties:
+      data_type:
+        type: "string"
+        enum: ["interview_analysis", "survey_results", "usability_test"]
+    required: ["data_type"]
+    
+  output_schema:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        enum: ["pattern_analysis"]
+      patterns:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            themes:
+              type: "array"
+              items:
+                type: "string"
+            sentiment_distribution:
+              type: "object"
+              additionalProperties:
+                type: "number"
+            frequency:
+              type: "integer"
+            confidence:
+              type: "number"
+      source_type:
+        type: "string"
+      confidence:
+        type: "number"
+    required: ["type", "patterns", "source_type", "confidence"]
+
+  confidence_threshold: 0.7
+
+analysis:
+  clustering:
+    eps: 0.3
+    min_samples: 2
+    metric: "cosine"
+  vectorization:
+    max_features: 1000
+    stop_words: "english" 

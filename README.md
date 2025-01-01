@@ -155,6 +155,254 @@ This framework provides:
 - Built-in validation and testing
 - Modular tool architecture
 - Comprehensive documentation generation
+- Advanced memory management and optimization
+
+### Memory Management Features
+
+The framework includes sophisticated memory management capabilities:
+
+#### 🔄 Memory Optimization
+- Multi-algorithm compression (LZ4, ZSTD, GZIP)
+- Intelligent caching with LRU eviction
+- Automatic compression for large datasets
+- Memory usage optimization
+
+#### 💾 Backup & Recovery
+- Scheduled memory backups
+- Tiered retention policy (daily/weekly/monthly)
+- Encrypted backup storage
+- Automated recovery procedures
+
+#### 📊 Memory Analytics
+- Real-time memory usage monitoring
+- Performance metrics tracking
+- Compression ratio analysis
+- Operation latency measurements
+- Automated alerting system
+
+#### ✅ Validation & Integrity
+- Continuous integrity checking
+- Consistency validation
+- Automatic error correction
+- Multi-stage recovery procedures
+
+### Memory System Architecture
+
+The framework implements a sophisticated memory system that integrates with tools and manages different types of memory storage:
+
+```mermaid
+graph TB
+    subgraph "Memory Components"
+        direction TB
+        STM[Short-Term Memory]
+        LTM[Long-Term Memory]
+        WM[Working Memory]
+    end
+    
+    subgraph "Memory Functions"
+        C[Context Management]
+        S[State Tracking]
+        H[History Storage]
+    end
+    
+    subgraph "Data Types"
+        RD[Research Data]
+        ID[Intermediate Results]
+        AF[Analysis Findings]
+        DP[Design Patterns]
+    end
+    
+    STM --> C
+    WM --> S
+    LTM --> H
+    
+    C --> RD
+    S --> ID
+    H --> AF
+    H --> DP
+    
+    style STM fill:#f9f,stroke:#333
+    style WM fill:#bfb,stroke:#333
+    style LTM fill:#bbf,stroke:#333
+```
+
+#### Memory Operations Flow
+
+```mermaid
+sequenceDiagram
+    participant Tool
+    participant STM as Short-Term Memory
+    participant WM as Working Memory
+    participant LTM as Long-Term Memory
+
+    Tool->>STM: Store Tool Results
+    STM->>WM: Process & Contextualize
+    WM->>Tool: Provide Context
+    WM->>LTM: Archive Important Findings
+    LTM->>WM: Retrieve Relevant Patterns
+    WM->>STM: Update Current Context
+```
+
+#### Memory Components
+
+1. **Short-Term Memory**
+   - Holds current context and immediate task information
+   - Manages active tool interactions
+   - Stores temporary results and intermediate data
+   - Refreshes with each new task or context switch
+
+2. **Working Memory**
+   - Maintains current session state
+   - Tracks ongoing operations and analysis
+   - Manages tool transitions and handoffs
+   - Holds active patterns and insights
+
+3. **Long-Term Memory**
+   - Stores completed operation results
+   - Maintains patterns and best practices
+   - Archives important findings
+   - Preserves project history and decisions
+
+## 🧪 Tool Recipes
+
+Tool Recipes are user-defined workflows that specify how a tool should process information. They provide a structured way to define complex multi-step operations while maintaining integration with the memory system.
+
+### Recipe Structure
+
+```yaml
+name: "tool_recipe_name"
+description: "Detailed description of what the recipe does"
+version: "1.0.0"
+
+steps:
+  - name: "step_name"
+    type: "data_processing"
+    description: "What this step does"
+    memory_operations:
+      read: ["input_data"]
+      write: ["output_data"]
+      context: ["processing_patterns"]
+    operations:
+      - "operation_1"
+      - "operation_2"
+    user_checkpoint: true  # Optional user interaction point
+```
+
+### Example: UX Research Interview Analysis
+
+Here's a practical example of a Tool Recipe for analyzing user interviews:
+
+```yaml
+name: "ux_interview_analysis"
+description: "Analyze and synthesize user interviews for UX research"
+version: "1.0.0"
+
+steps:
+  - name: "transcript_analysis"
+    type: "data_processing"
+    description: "Analyze raw interview transcripts"
+    memory_operations:
+      read: ["raw_transcripts"]
+      write: ["cleaned_transcripts"]
+      context: ["cleaning_patterns"]
+    operations:
+      - "remove_filler_words"
+      - "correct_grammar"
+
+  - name: "insight_annotation"
+    type: "analysis"
+    description: "Annotate key insights"
+    memory_operations:
+      read: ["cleaned_transcripts"]
+      write: ["annotated_insights"]
+      context: ["annotation_patterns"]
+    operations:
+      - "highlight_key_quotes"
+      - "tag_sentiments"
+    user_checkpoint: true
+```
+
+### Memory Integration
+
+Tool Recipes integrate with the memory system at three levels:
+
+1. **Short-Term Memory**
+   - Stores immediate step results
+   - Maintains current processing context
+   - Handles intermediate data
+
+2. **Working Memory**
+   - Manages workflow state
+   - Tracks active patterns
+   - Maintains processing context
+
+3. **Long-Term Memory**
+   - Stores completed analyses
+   - Maintains proven workflows
+   - Archives validated patterns
+
+### Creating Tool Recipes
+
+1. **Define the Recipe**
+```python
+@toolweaver.create_recipe
+"""
+I need a recipe for processing customer feedback that:
+1. Analyzes sentiment
+2. Extracts key themes
+3. Generates summary reports
+"""
+
+# ToolWeaver will create:
+# - Recipe template with defined steps
+# - Memory integration points
+# - User checkpoints
+# Location: tools/modules/feedback_processor/recipes/
+```
+
+2. **Customize Operations**
+```python
+@toolweaver.customize_recipe("feedback_processor")
+"""
+Add data validation steps and error handling for:
+- Input format validation
+- Sentiment score normalization
+- Theme clustering verification
+"""
+```
+
+3. **Deploy and Use**
+```python
+@toolweaver.use_recipe("feedback_processor")
+"""
+Process customer feedback from Q2 2023:
+- Input: feedback.csv
+- Output: analysis_report.pdf
+- Memory: use cached patterns
+"""
+```
+
+### Benefits of Tool Recipes
+
+1. **Structured Workflows**
+   - Clear step definitions
+   - Explicit memory interactions
+   - Defined validation rules
+
+2. **User Control**
+   - Customizable checkpoints
+   - Interactive refinement
+   - Process visibility
+
+3. **Memory Optimization**
+   - Efficient data flow
+   - Pattern reuse
+   - Context preservation
+
+4. **Maintainability**
+   - Version control
+   - Documentation generation
+   - Testing integration
 
 ### Directory Structure
 ```
@@ -487,3 +735,676 @@ git push origin main  # or specified branch
    - Automatic version bumps
    - Changelog updates
    - Release notes generation
+
+## 🏗️ Project Management System
+
+ToolWeaver introduces a sophisticated project management system that enables efficient organization of tools, recipes, and memory contexts across multiple projects.
+
+### Project Workspace Structure
+
+```
+project_name/
+├── data/              # Project data files
+├── exports/           # Generated outputs
+├── memory/           # Project-specific memory
+├── config/           # Configuration files
+├── tools/            # Project-specific tools
+└── project.yaml      # Project configuration
+```
+
+### Project Configuration
+
+```yaml
+name: "project_name"
+description: "Project description"
+version: "1.0.0"
+
+workspace:
+  data_directory: "data/"
+  memory_namespace: "${project_name}"
+  export_directory: "exports/"
+
+tools:
+  - name: "tool_name"
+    version: "1.2.0"
+    config:
+      # Tool-specific configuration
+
+recipes:
+  - name: "recipe_name"
+    version: "1.0.0"
+    batch_processing:
+      enabled: true
+      input_pattern: "*.data"
+```
+
+### Key Features
+
+1. **Workspace Management**
+   - Automatic project structure creation
+   - Git integration for version control
+   - Project-specific configuration
+   - Tool and recipe management
+
+2. **Tool Registry**
+   - Centralized tool registration
+   - Version management
+   - Automatic dependency tracking
+   - Documentation generation
+
+3. **Recipe Management**
+   - Workflow definition storage
+   - Compatibility validation
+   - Automatic registration
+   - Cross-project sharing
+
+## 🧠 Memory System
+
+The memory system provides hierarchical storage and management of project data with sophisticated features for data organization and retrieval.
+
+### Memory Architecture
+
+```mermaid
+graph TB
+    subgraph "Project Memory"
+        PM[Project Namespace]
+        ST[Short-Term]
+        WM[Working Memory]
+        LT[Long-Term]
+    end
+    
+    subgraph "Data Types"
+        S[Structured]
+        U[Unstructured]
+        M[Mixed Content]
+    end
+    
+    PM --> ST
+    PM --> WM
+    PM --> LT
+    
+    ST --> S
+    WM --> U
+    LT --> M
+    
+    style PM fill:#f9f,stroke:#333
+    style ST fill:#bbf,stroke:#333
+    style LT fill:#bfb,stroke:#333
+```
+
+### Memory Configuration
+
+```yaml
+memory:
+  namespace: "${project_name}"
+  retention_policy:
+    short_term: "30d"
+    working: "90d"
+    long_term: "unlimited"
+  
+  data_types:
+    structured:
+      formats: ["json", "yaml"]
+      validation: true
+    unstructured:
+      enabled: true
+      types: ["text", "audio"]
+```
+
+### Features
+
+1. **Namespace Management**
+   - Project isolation
+   - Hierarchical organization
+   - Cross-project pattern sharing
+   - Global pattern storage
+
+2. **Data Type Support**
+   - Structured data (JSON, YAML, TOML)
+   - Unstructured data (text, audio, images)
+   - Mixed content with metadata
+   - Schema validation
+
+3. **Memory Operations**
+   - Automatic backups
+   - Version control
+   - Garbage collection
+   - Data retention policies
+
+## 🔄 Batch Processing
+
+ToolWeaver supports efficient processing of multiple files with advanced monitoring and control features.
+
+### Batch Configuration
+
+```yaml
+batch_processing:
+  enabled: true
+  parallel:
+    max_workers: 5
+    strategy: "process_pool"
+  
+  monitoring:
+    progress_tracking: true
+    status_updates: true
+    error_handling:
+      retry_count: 3
+```
+
+### Features
+
+1. **Parallel Processing**
+   - Multi-worker execution
+   - Progress tracking
+   - Error handling
+   - Automatic retries
+
+2. **Directory Watching**
+   - Automatic file detection
+   - Pattern matching
+   - Recursive scanning
+   - Ignore rules
+
+3. **Export Management**
+   - Multiple format support (PDF, JSON, HTML)
+   - Template-based generation
+   - Automatic archival
+   - Compression support
+
+## 🔧 Using Project Management
+
+### 1. Creating a New Project
+
+```python
+@toolweaver.create_project
+"""
+Create a new UX research project:
+name: ux_research_2024_q1
+description: Q1 2024 User Research
+tools_needed: [interview_analyzer, insight_synthesizer]
+"""
+```
+
+### 2. Adding Tools to Project
+
+```python
+@toolweaver.add_tool
+"""
+Add sentiment analysis tool to project:
+project: ux_research_2024_q1
+tool: sentiment_analyzer
+version: 1.2.0
+"""
+```
+
+### 3. Configuring Batch Processing
+
+```python
+@toolweaver.configure_batch
+"""
+Configure batch processing for transcripts:
+project: ux_research_2024_q1
+input_pattern: *.transcript
+parallel: true
+max_workers: 5
+"""
+```
+
+### 4. Managing Memory
+
+```python
+@toolweaver.memory_ops
+"""
+Configure memory for project:
+project: ux_research_2024_q1
+retention:
+  short_term: 30d
+  working: 90d
+export_format: pdf
+"""
+```
+
+## 📚 Managing Multiple Projects
+
+ToolWeaver's project system allows you to manage multiple UX research projects simultaneously, each with its own isolated workspace, memory, and configurations. Here's how to work with multiple projects:
+
+### Example: Managing Two UX Research Projects
+
+Let's say you're working on two different projects:
+1. Mobile App Redesign
+2. Enterprise Dashboard Development
+
+#### 1. Creating Project Workspaces
+
+```python
+# Project 1: Mobile App Redesign
+@toolweaver.create_project
+"""
+Create UX research project:
+name: mobile_app_redesign
+description: Mobile app redesign research Q1 2024
+base_directory: ~/projects/mobile_app/
+tools_needed: [
+    interview_analyzer,
+    insight_synthesizer,
+    journey_mapper
+]
+"""
+
+# Project 2: Enterprise Dashboard
+@toolweaver.create_project
+"""
+Create UX research project:
+name: enterprise_dashboard
+description: Enterprise dashboard UX research
+base_directory: ~/projects/dashboard/
+tools_needed: [
+    interview_analyzer,
+    insight_synthesizer,
+    heuristic_evaluator
+]
+"""
+```
+
+This creates two isolated project workspaces:
+
+```
+~/projects/
+├── mobile_app/
+│   ├── data/
+│   │   └── interviews/          # Mobile app interviews
+│   ├── memory/
+│   │   ├── short_term/
+│   │   ├── working/
+│   │   └── long_term/
+│   ├── exports/
+│   └── project.yaml
+│
+└── dashboard/
+    ├── data/
+    │   └── interviews/          # Dashboard interviews
+    ├── memory/
+    │   ├── short_term/
+    │   ├── working/
+    │   └── long_term/
+    ├── exports/
+    └── project.yaml
+```
+
+#### 2. Project-Specific Configurations
+
+Each project can have its own configuration:
+
+```yaml
+# mobile_app/project.yaml
+name: "mobile_app_redesign"
+version: "1.0.0"
+
+workspace:
+  data_directory: "data/"
+  interview_directory: "data/interviews/"
+  memory_namespace: "mobile_app"
+
+tools:
+  - name: "interview_analyzer"
+    version: "1.2.0"
+    config:
+      focus_areas: ["mobile_usability", "gesture_interactions"]
+      user_segments: ["mobile_native", "cross_platform"]
+
+recipes:
+  - name: "ux_interview_analysis"
+    version: "1.0.0"
+    batch_processing:
+      enabled: true
+      input_pattern: "*.transcript"
+      watch_directory: true
+
+memory:
+  retention_policy:
+    short_term: "30d"
+    working: "90d"
+```
+
+```yaml
+# dashboard/project.yaml
+name: "enterprise_dashboard"
+version: "1.0.0"
+
+workspace:
+  data_directory: "data/"
+  interview_directory: "data/interviews/"
+  memory_namespace: "dashboard"
+
+tools:
+  - name: "interview_analyzer"
+    version: "1.2.0"
+    config:
+      focus_areas: ["data_visualization", "enterprise_workflow"]
+      user_segments: ["data_analysts", "managers"]
+
+recipes:
+  - name: "ux_interview_analysis"
+    version: "1.0.0"
+    batch_processing:
+      enabled: true
+      input_pattern: "*.transcript"
+```
+
+#### 3. Using the UX Research Tool in Different Projects
+
+```python
+# Switch to Mobile App project and run analysis
+@toolweaver.use_project("mobile_app_redesign")
+"""
+Run UX research analysis:
+input_directory: data/interviews/
+recipe: ux_interview_analysis
+focus: mobile_usability
+"""
+
+# Switch to Dashboard project and run analysis
+@toolweaver.use_project("enterprise_dashboard")
+"""
+Run UX research analysis:
+input_directory: data/interviews/
+recipe: ux_interview_analysis
+focus: data_visualization
+"""
+```
+
+#### 4. Project-Specific Memory Operations
+
+```python
+# Access Mobile App project insights
+@toolweaver.memory_ops
+"""
+Project: mobile_app_redesign
+Operation: retrieve_insights
+Memory_type: long_term
+Pattern: user_journey
+"""
+
+# Access Dashboard project insights
+@toolweaver.memory_ops
+"""
+Project: enterprise_dashboard
+Operation: retrieve_insights
+Memory_type: long_term
+Pattern: workflow_optimization
+"""
+```
+
+#### 5. Cross-Project Pattern Sharing
+
+```python
+@toolweaver.share_patterns
+"""
+Source_project: mobile_app_redesign
+Target_project: enterprise_dashboard
+Pattern_types: [
+    "user_interaction_patterns",
+    "navigation_patterns"
+]
+Adaptation_rules: {
+    "mobile_gestures": "desktop_interactions",
+    "screen_size": "responsive_layout"
+}
+"""
+```
+
+### Project Isolation and Sharing
+
+1. **Isolated Resources**
+   - Each project has its own memory namespace
+   - Separate data directories
+   - Project-specific tool configurations
+   - Independent batch processing
+
+2. **Shared Resources**
+   - Global tool registry
+   - Common recipe templates
+   - Shared pattern library
+   - Cross-project insights
+
+3. **Project Switching**
+   ```python
+   @toolweaver.switch_project
+   """
+   Project: mobile_app_redesign
+   Load_context: true
+   Preserve_global_patterns: true
+   """
+   ```
+
+4. **Project Status Monitoring**
+   ```python
+   @toolweaver.project_status
+   """
+   Project: mobile_app_redesign
+   Show:
+     - active_processes
+     - memory_usage
+     - recent_insights
+     - pending_tasks
+   """
+   ```
+
+### Best Practices for Multi-Project Management
+
+1. **Project Organization**
+   - Use clear, descriptive project names
+   - Maintain consistent directory structure
+   - Document project-specific configurations
+   - Regular memory cleanup
+
+2. **Resource Management**
+   - Monitor memory usage per project
+   - Archive completed projects
+   - Share relevant patterns
+   - Maintain tool version compatibility
+
+3. **Workflow Management**
+   - Create project-specific recipes
+   - Configure appropriate batch sizes
+   - Set up project-specific monitoring
+   - Define clear export formats
+
+## 🗣️ Natural Language Interaction: A User's Guide
+
+ToolWeaver is designed to be accessible to everyone, regardless of technical background. Here's how different team members can interact with it naturally:
+
+### For UX Researchers
+
+```
+You: "I need to analyze user interviews for our new product"
+Agent: "I'll set up a UX research project for you. Would you like me to:
+       - Create a workspace for your interviews
+       - Set up analysis tools
+       - Configure automatic pattern recognition?"
+
+You: "Yes, and I have 20 interview transcripts to analyze"
+Agent: "I'll set up batch processing. Just put your transcripts in the 
+       data/interviews folder, and I'll analyze them automatically."
+```
+
+### For Designers
+
+```
+You: "Show me patterns from last week's user interviews"
+Agent: "I found several UX patterns:
+       - Navigation preferences
+       - Common pain points
+       - Feature requests
+       Would you like me to create a visual summary?"
+
+You: "Export this as a presentation for stakeholders"
+Agent: "Creating a presentation with:
+       - Key insights highlighted
+       - User journey maps
+       - Actionable recommendations"
+```
+
+### For Product Managers
+
+```
+You: "What are the top user pain points from Q1 research?"
+Agent: "Analyzing all Q1 interviews...
+       Found these key issues:
+       1. Onboarding complexity
+       2. Feature discovery
+       3. Performance concerns
+       Would you like a detailed report?"
+```
+
+## 📚 Real-World Example: A Tale of Two Projects
+
+Let's see how two different team members use ToolWeaver for their projects:
+
+### Alice's Mobile App Project
+
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Agent
+    participant Project
+
+    Alice->>Agent: Need to analyze mobile app interviews
+    Agent->>Project: Create mobile UX workspace
+    Agent->>Alice: Show getting started guide
+    
+    Note over Alice,Project: Project Setup
+    
+    Alice->>Agent: Add 20 interview transcripts
+    Agent->>Project: Process in batches
+    Project->>Alice: Generate initial insights
+```
+
+1. **Starting the Project**
+   ```
+   Alice: "I need to analyze user interviews for our mobile app"
+   Agent: "Creating 'mobile_app_research' project with:
+          - Mobile UX analysis tools
+          - Gesture pattern recognition
+          - User journey mapping"
+   ```
+
+2. **Adding Data**
+   ```
+   Alice: "I have interview transcripts to analyze"
+   Agent: "I'll process them in batches and look for:
+          - Mobile interaction patterns
+          - Gesture preferences
+          - Navigation flows"
+   ```
+
+### Bob's Dashboard Project
+
+```mermaid
+sequenceDiagram
+    participant Bob
+    participant Agent
+    participant Tools
+
+    Bob->>Agent: Create dashboard research project
+    Agent->>Tools: Set up analytics tools
+    
+    Note over Bob,Tools: Project Evolution
+    
+    Bob->>Agent: Need competitor analysis
+    Agent->>Tools: Create new tool
+    Tools->>Bob: Enable competitive research
+```
+
+1. **Initial Setup**
+   ```
+   Bob: "Create a project for enterprise dashboard research"
+   Agent: "Setting up 'dashboard_research' with:
+          - Interview analysis tools
+          - Data visualization analysis
+          - Workflow pattern recognition"
+   ```
+
+2. **Adding New Capabilities**
+   ```
+   Bob: "I need to analyze competitor dashboards"
+   Agent: "Creating a competitor analysis tool that can:
+          - Compare feature sets
+          - Analyze layouts
+          - Track UX patterns"
+   ```
+
+### Cross-Project Learning
+
+The system enables knowledge sharing between projects:
+
+```
+Alice: "What tools are available in other projects?"
+Agent: "The dashboard project has a competitor analysis tool.
+       I can adapt it for mobile app comparison:
+       - Modify for mobile interfaces
+       - Add gesture analysis
+       - Focus on mobile patterns"
+```
+
+## 💡 Getting Started for Non-Technical Users
+
+1. **Start Your Project**
+   ```
+   Just tell the agent what you need:
+   "I need to analyze user research for our new product"
+   ```
+
+2. **Add Your Data**
+   ```
+   Put your files in the right folder and say:
+   "Analyze the new interviews I added"
+   ```
+
+3. **Get Insights**
+   ```
+   Ask questions naturally:
+   "What patterns did you find?"
+   "Show me the key user pain points"
+   "Create a presentation for stakeholders"
+   ```
+
+4. **Share and Collaborate**
+   ```
+   Easy project sharing:
+   "Share these insights with the design team"
+   "Export this as a PDF report"
+   "Show what other teams have discovered"
+   ```
+
+## 🔄 Coming Back to Your Work
+
+The system remembers your context:
+
+```
+You: "Continue working on the mobile app research"
+Agent: "Welcome back to mobile app research!
+       Since your last session:
+       - 5 new interviews analyzed
+       - 3 new patterns identified
+       - 2 reports generated"
+```
+
+## 🎯 Project Evolution
+
+Your project can grow with your needs:
+
+1. **Start Simple**
+   ```
+   "I need to analyze some user interviews"
+   ```
+
+2. **Add Capabilities**
+   ```
+   "I also need to analyze competitor products"
+   ```
+
+3. **Share Knowledge**
+   ```
+   "What insights can we use from other projects?"
+   ```

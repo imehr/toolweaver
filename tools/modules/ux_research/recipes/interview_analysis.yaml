@@ -1,0 +1,105 @@
+name: "ux_interview_analysis"
+description: "Analyze and synthesize user interviews for UX research and product design"
+version: "1.0.0"
+
+steps:
+  - name: "transcript_analysis"
+    type: "data_processing"
+    description: "Analyze raw interview transcripts"
+    memory_operations:
+      read: ["raw_transcripts"]
+      write: ["cleaned_transcripts"]
+      context: ["cleaning_patterns"]
+    validation_rules:
+      - "check_transcript_format"
+      - "verify_content_integrity"
+
+  - name: "transcript_refinement"
+    type: "data_processing"
+    description: "Clean and refine transcripts"
+    memory_operations:
+      read: ["cleaned_transcripts"]
+      write: ["refined_transcripts"]
+      context: ["refinement_patterns"]
+    operations:
+      - "remove_filler_words"
+      - "correct_grammar"
+      - "clarify_ambiguous_statements"
+
+  - name: "insight_annotation"
+    type: "analysis"
+    description: "Annotate key insights and emotional cues"
+    memory_operations:
+      read: ["refined_transcripts"]
+      write: ["annotated_insights"]
+      context: ["annotation_patterns"]
+    operations:
+      - "highlight_key_quotes"
+      - "tag_sentiments"
+      - "label_themes"
+
+  - name: "synthesis_structuring"
+    type: "synthesis"
+    description: "Organize annotated transcripts into thematic summaries"
+    memory_operations:
+      read: ["annotated_insights"]
+      write: ["structured_insights", "executive_summary"]
+      context: ["synthesis_patterns"]
+    operations:
+      - "group_by_themes"
+      - "create_executive_summary"
+    user_checkpoint: true
+
+  - name: "artifact_extraction"
+    type: "synthesis"
+    description: "Extract elements for UX artifacts"
+    memory_operations:
+      read: ["structured_insights"]
+      write: ["ux_artifacts"]
+      context: ["artifact_patterns"]
+    operations:
+      - "extract_persona_elements"
+      - "extract_journey_elements"
+      - "extract_jtbd_statements"
+    user_checkpoint: true
+
+  - name: "thematic_matrix_creation"
+    type: "synthesis"
+    description: "Create cross-referenced thematic matrix"
+    memory_operations:
+      read: ["ux_artifacts", "structured_insights"]
+      write: ["thematic_matrix"]
+      context: ["matrix_patterns"]
+    operations:
+      - "create_theme_matrix"
+      - "align_insights_artifacts"
+    user_checkpoint: true
+
+  - name: "followup_generation"
+    type: "analysis"
+    description: "Generate follow-up questions"
+    memory_operations:
+      read: ["thematic_matrix", "structured_insights"]
+      write: ["followup_questions"]
+      context: ["question_patterns"]
+    operations:
+      - "identify_gaps"
+      - "generate_questions"
+
+  - name: "synthesis_review"
+    type: "validation"
+    description: "Review and iterate on synthesized content"
+    memory_operations:
+      read: ["all_outputs"]
+      write: ["final_synthesis"]
+      context: ["review_patterns"]
+    operations:
+      - "conduct_peer_review"
+      - "iterate_summaries"
+    user_checkpoint: true
+
+validation_rules:
+  - "verify_memory_operations"
+  - "check_step_dependencies"
+  - "validate_user_checkpoints"
+  - "ensure_data_consistency" 
